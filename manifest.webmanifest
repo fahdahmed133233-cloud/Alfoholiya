@@ -1,0 +1,19 @@
+{
+  "name": "الفحولية",
+  "short_name": "الفحولية",
+  "description": "مساحتك الشخصية لتتبع التمارين والنشاط",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d0a18",
+  "theme_color": "#0d0a18",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
