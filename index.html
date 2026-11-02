@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d0a18">
+  <meta name="description" content="الفحولية — مساحة شخصية لتتبع تمارينك ونشاطك اليومي.">
+  <title>الفحولية | مساحتك للنشاط</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <!-- شاشة إنشاء الملف الشخصي -->
+  <section id="setupScreen" class="setup-screen">
+    <div class="setup-glow" aria-hidden="true"></div>
+    <div class="setup-card">
+      <div class="brand brand-large">
+        <span class="brand-mark">ف</span>
+        <span>الفحولية</span>
+      </div>
+      <p class="eyebrow">مساحتك الخاصة للنشاط</p>
+      <h1>ابدأ رحلتك <span class="gradient-text">بطريقتك.</span></h1>
+      <p class="setup-copy">أنشئ ملفك الشخصي في ثوانٍ. اسمك وصورتك وتقدمك هيفضلوا محفوظين على الجهاز ده.</p>
+
+      <form id="setupForm" class="profile-form">
+        <label class="photo-picker" for="setupPhotoInput">
+          <span class="photo-preview" id="setupPhotoPreview"><span class="photo-placeholder">＋</span></span>
+          <span class="photo-picker-text"><strong>أضف صورتك الشخصية</strong><small>اختياري — الصورة للملف الشخصي فقط</small></span>
+          <span class="photo-edit-icon">✦</span>
+        </label>
+        <input id="setupPhotoInput" class="visually-hidden" type="file" accept="image/*">
+
+        <label class="field-label" for="setupName">تحب نناديك بإيه؟</label>
+        <input id="setupName" class="text-field" type="text" maxlength="28" placeholder="اكتب اسمك هنا" autocomplete="given-name" required>
+        <button class="primary-button full-button" type="submit">إنشاء ملفي الشخصي <span>←</span></button>
+      </form>
+      <div class="privacy-note"><span>🔒</span><span>من غير باسورد. بياناتك محفوظة محليًا على متصفحك.</span></div>
+      <div class="setup-footer">نسخة تجريبية أولية <span>•</span> 1.0</div>
+    </div>
+    <div class="setup-side-note" aria-hidden="true"><span>تحرّك على مهلك</span><i></i><span>واحتفل بكل خطوة</span></div>
+  </section>
+
+  <main id="app" class="app-shell hidden">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="الفحولية - الرئيسية" data-nav="home">
+        <span class="brand-mark">ف</span>
+        <span>الفحولية</span>
+      </a>
+      <div class="topbar-right">
+        <span class="local-indicator"><i></i> حفظ محلي</span>
+        <button id="topProfileButton" class="top-avatar" aria-label="فتح الملف الشخصي"></button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-caption">مساحتك</div>
+        <button class="nav-item active" data-nav="home"><span class="nav-icon">⌂</span><span>الرئيسية</span></button>
+        <button class="nav-item" data-nav="workouts"><span class="nav-icon">✳</span><span>تماريني</span></button>
+        <button class="nav-item" data-nav="progress"><span class="nav-icon">↗</span><span>تقدمي</span></button>
+        <button class="nav-item" data-nav="profile"><span class="nav-icon">◉</span><span>ملفي الشخصي</span></button>
+        <div class="sidebar-bottom">
+          <div class="sidebar-quote">«الاستمرارية أهم من السرعة»</div>
+          <span class="version-label">الفحولية · إصدار تجريبي</span>
+        </div>
+      </aside>
+
+      <div class="content-area">
+        <!-- الرئيسية -->
+        <section id="homeView" class="view active-view">
+          <section class="welcome-hero" id="welcomeHero">
+            <img id="heroPhoto" class="hero-photo" alt="" aria-hidden="true">
+            <div class="hero-shade"></div>
+            <div class="hero-content">
+              <span class="hero-kicker"><i></i> يوم جديد، فرصة جديدة</span>
+              <h1 id="welcomeTitle">مرحبًا، <span class="gradient-text">صديقنا</span></h1>
+              <p>خدها خطوة بخطوة. أنت اللي بتحدد إيقاعك.</p>
+              <button class="hero-button" data-nav="workouts">ابدأ نشاطك <span>←</span></button>
+            </div>
+            <div class="hero-watermark">MOVE<br>YOUR WAY</div>
+          </section>
+
+          <div class="section-heading stats-heading">
+            <div><span class="eyebrow">نظرة سريعة</span><h2>رحلتك لحد دلوقتي</h2></div>
+            <span class="subtle-date" id="todayLabel"></span>
+          </div>
+          <div class="stats-grid">
+            <article class="stat-card stat-purple"><div class="stat-icon">✳</div><span class="stat-label">جلسات مكتملة</span><strong id="statSessions">٠</strong><small>كل بداية ليها قيمة</small></article>
+            <article class="stat-card stat-blue"><div class="stat-icon">◷</div><span class="stat-label">وقت النشاط</span><strong><span id="statMinutes">٠</span> <em>دقيقة</em></strong><small>وقت خصصته لنفسك</small></article>
+            <article class="stat-card stat-green"><div class="stat-icon">↗</div><span class="stat-label">تكرارات مسجلة</span><strong id="statReps">٠</strong><small>تقدمك محفوظ عندك</small></article>
+          </div>
+
+          <div class="home-columns">
+            <section class="panel quick-panel">
+              <div class="panel-heading"><div><span class="eyebrow">اختار نشاطك</span><h2>ابدأ من هنا</h2></div><button class="text-button" data-nav="workouts">كل التمارين ←</button></div>
+              <div id="quickExercises" class="quick-exercises"></div>
+            </section>
+            <section class="panel encouragement-panel">
+              <div class="sparkle">✦</div>
+              <span class="eyebrow">تذكير لطيف</span>
+              <h2>اسمع لجسمك، وخد راحتك.</h2>
+              <p>مش لازم كل يوم يكون زي اللي قبله. الراحة جزء طبيعي من أي روتين نشاط.</p>
+              <div class="encouragement-line"><span></span><span></span><span></span><span></span><span></span></div>
+            </section>
+          </div>
+
+          <section class="panel recent-panel">
+            <div class="panel-heading"><div><span class="eyebrow">آخر خطواتك</span><h2>النشاط الأخير</h2></div><button class="text-button" data-nav="progress">عرض التقدم ←</button></div>
+            <div id="recentActivity" class="recent-list"></div>
+          </section>
+        </section>
+
+        <!-- التمارين -->
+        <section id="workoutsView" class="view">
+          <div class="page-heading"><div><span class="eyebrow">على مزاجك وبإيقاعك</span><h1>مساحة التمارين</h1><p>اختار تمرين، وسجّل نشاطك بالطريقة اللي تناسبك.</p></div><button id="addExerciseButton" class="primary-button">＋ إضافة تمرين</button></div>
+          <div class="workout-notice"><span>✦</span><p>ابدأ بهدوء، وخد راحة وقت ما تحتاج. مفيش أرقام لازم توصل لها.</p></div>
+          <div id="exerciseGrid" class="exercise-grid"></div>
+        </section>
+
+        <!-- التقدم -->
+        <section id="progressView" class="view">
+          <div class="page-heading"><div><span class="eyebrow">كل خطوة محسوبة</span><h1>تقدمك</h1><p>ملخص نشاطك المسجل على الجهاز ده.</p></div></div>
+          <div class="progress-highlight panel">
+            <div class="progress-level-icon">✧</div>
+            <div><span class="eyebrow">محطتك الحالية</span><h2 id="levelName">بداية هادئة</h2><p id="levelDescription">كل تجربة جديدة بتضيف لخبرتك.</p></div>
+            <div class="level-count"><strong id="levelSessions">٠</strong><span>جلسة مسجلة</span></div>
+          </div>
+          <div class="progress-grid">
+            <section class="panel chart-panel"><div class="panel-heading"><div><span class="eyebrow">آخر ٧ أيام</span><h2>دقائق النشاط</h2></div><span class="chart-unit">بالدقائق</span></div><div id="weeklyChart" class="weekly-chart"></div></section>
+            <section class="panel totals-panel"><div class="panel-heading"><div><span class="eyebrow">إجمالي رحلتك</span><h2>أرقامك</h2></div></div><div class="total-row"><span>الجلسات المكتملة</span><strong id="totalSessions">٠</strong></div><div class="total-row"><span>إجمالي الدقائق</span><strong id="totalMinutes">٠</strong></div><div class="total-row"><span>التكرارات المسجلة</span><strong id="totalReps">٠</strong></div></section>
+          </div>
+          <section class="panel history-panel"><div class="panel-heading"><div><span class="eyebrow">أرشيفك</span><h2>سجل النشاط</h2></div></div><div id="activityHistory" class="history-list"></div></section>
+        </section>
+
+        <!-- الملف الشخصي -->
+        <section id="profileView" class="view">
+          <div class="page-heading"><div><span class="eyebrow">بياناتك وإعداداتك</span><h1>ملفي الشخصي</h1><p>تقدر تعدّل اسمك وصورتك وتحتفظ بنسخة احتياطية من تقدمك.</p></div></div>
+          <section class="panel profile-edit-panel">
+            <div class="profile-cover"><div class="profile-cover-glow"></div><div id="profileLargeAvatar" class="profile-large-avatar"></div><div class="profile-cover-text"><span class="eyebrow">أهلًا بيك في مساحتك</span><h2 id="profileDisplayName">صديقنا</h2><span class="profile-tag">ملف شخصي محلي</span></div></div>
+            <form id="editProfileForm" class="edit-profile-form">
+              <div class="form-group"><label for="editName">الاسم</label><input id="editName" class="text-field" type="text" maxlength="28" required></div>
+              <div class="form-group"><label>الصورة الشخصية</label><label class="secondary-button file-button" for="editPhotoInput">اختيار صورة جديدة <span>＋</span></label><input id="editPhotoInput" class="visually-hidden" type="file" accept="image/*"><small class="field-hint">الصورة بتظهر في واجهة الترحيب والملف الشخصي فقط.</small></div>
+              <button class="primary-button" type="submit">حفظ التعديلات</button>
+            </form>
+          </section>
+
+          <section class="panel data-panel"><div class="panel-heading"><div><span class="eyebrow">بياناتك تحت سيطرتك</span><h2>الحفظ والنسخ الاحتياطي</h2></div><span class="lock-icon">⌑</span></div>
+            <p>الملف الشخصي والتمارين وسجل النشاط محفوظين محليًا في المتصفح. مش محتاج باسورد، لكن البيانات مش هتتنقل تلقائيًا لجهاز تاني.</p>
+            <div class="data-actions"><button id="exportButton" class="secondary-button">تنزيل نسخة احتياطية <span>↓</span></button><label class="secondary-button import-button" for="importInput">استعادة نسخة <span>↑</span></label><input id="importInput" class="visually-hidden" type="file" accept="application/json"></div>
+          </section>
+          <section class="panel cloud-panel"><div class="cloud-symbol">☁</div><div><span class="eyebrow">ميزة قادمة</span><h2>مزامنة حساب Google</h2><p>المزامنة السحابية هتحتاج ربط آمن بحساب Google وخدمة لحفظ بياناتك. النسخة الحالية محلية فقط.</p></div><span class="coming-soon">قريبًا</span></section>
+          <button id="resetButton" class="danger-text-button">حذف الملف الشخصي والبيانات من هذا المتصفح</button>
+        </section>
+
+        <footer class="app-footer"><span>الفحولية</span><span>اتحرك بطريقتك، واحتفل بخطواتك ✦</span></footer>
+      </div>
+    </div>
+  </main>
+
+  <!-- نافذة التمرين -->
+  <div id="sessionModal" class="modal-backdrop" aria-hidden="true">
+    <section class="session-modal" role="dialog" aria-modal="true" aria-labelledby="sessionTitle">
+      <button class="modal-close" data-close-modal="sessionModal" aria-label="إغلاق">×</button>
+      <div class="session-top-icon" id="sessionIcon">✳</div>
+      <span class="eyebrow">مساحة التمرين</span>
+      <h2 id="sessionTitle">تمرين جديد</h2>
+      <p id="sessionSubtitle" class="session-subtitle">ابدأ وقت ما تكون جاهز.</p>
+
+      <div id="repPanel" class="rep-panel">
+        <span class="counter-label">عدد التكرارات</span>
+        <div id="repCount" class="rep-count">٠</div>
+        <div class="counter-controls"><button id="decreaseRep" class="counter-minus" aria-label="تقليل تكرار">−</button><button id="increaseRep" class="counter-plus" aria-label="إضافة تكرار">＋</button></div>
+        <button id="voiceButton" class="voice-button"><span>🎙</span> العد بالصوت</button>
+        <p id="voiceStatus" class="voice-status">اضغط وابدأ قول: واحد، اتنين، تلاتة…</p>
+      </div>
+
+      <div id="timerPanel" class="timer-panel hidden">
+        <span class="counter-label">الوقت المتبقي</span>
+        <div id="timerDisplay" class="timer-display">00:30</div>
+        <div class="timer-presets"><button data-seconds="30" class="selected">٣٠ ثانية</button><button data-seconds="45">٤٥ ثانية</button><button data-seconds="60">٦٠ ثانية</button></div>
+        <div class="timer-controls"><button id="timerStartButton" class="primary-button">ابدأ المؤقّت</button><button id="timerResetButton" class="secondary-button">إعادة</button></div>
+        <p id="timerStatus" class="voice-status">تقدر توقف أو تنهي في أي وقت.</p>
+      </div>
+
+      <button id="finishSessionButton" class="primary-button full-button finish-button">إنهاء وحفظ الجلسة</button>
+      <p class="session-footnote">خد راحة وقت ما تحتاج. راحتك أهم من أي عدّاد.</p>
+    </section>
+  </div>
+
+  <!-- نافذة إضافة تمرين -->
+  <div id="addExerciseModal" class="modal-backdrop" aria-hidden="true">
+    <section class="small-modal" role="dialog" aria-modal="true" aria-labelledby="addExerciseTitle">
+      <button class="modal-close" data-close-modal="addExerciseModal" aria-label="إغلاق">×</button>
+      <span class="eyebrow">خصص مساحتك</span><h2 id="addExerciseTitle">تمرين جديد</h2>
+      <form id="addExerciseForm">
+        <label class="field-label" for="newExerciseName">اسم التمرين</label><input id="newExerciseName" class="text-field" maxlength="30" placeholder="مثلاً: تمرين التمدد" required>
+        <label class="field-label" for="newExerciseMode">طريقة التسجيل</label><select id="newExerciseMode" class="text-field"><option value="reps">عدّ التكرارات</option><option value="timer">استخدم المؤقّت</option></select>
+        <button class="primary-button full-button" type="submit">إضافة التمرين</button>
+      </form>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
